@@ -42,7 +42,6 @@ const CreateGame = () => {
     });
   }, []);
 
-  console.log(players);
   const theme = createTheme({
     typography: {
       fontFamily: ["Nunito Sans"].join(","),
@@ -52,14 +51,14 @@ const CreateGame = () => {
   const handleSaveGame = () => {
     const data = {
       scores: [
-        { playerId: eastName, score: eastScore, direction: 0 },
-        { playerId: southName, score: southScore, direction: 1 },
-        { playerId: westName, score: westScore, direction: 2 },
-        { playerId: northName, score: northScore, direction: 3 },
+        { playerId: eastName, score: Number(eastScore), direction: 0 },
+        { playerId: southName, score: Number(southScore), direction: 1 },
+        { playerId: westName, score: Number(westScore), direction: 2 },
+        { playerId: northName, score: Number(northScore), direction: 3 },
       ],
     };
     setLoading(true);
-
+    console.log(data);
     // the data being sent is contained in the data variable.
     axios
       .post("http://localhost:5555/games", data)
@@ -68,7 +67,19 @@ const CreateGame = () => {
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(err.response.data);
+          console.log(err.response.status);
+          console.log(err.response.headers);
+
+          // Display an alert with a specific error message
+          alert(`Error: ${err.response.data.message}`);
+          location.reload();
+
+          console.log(err);
+        }
       });
   };
 
