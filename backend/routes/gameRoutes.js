@@ -1,9 +1,11 @@
 import express from 'express';
 import { Game } from '../models/gameModel.js';
 import { Player } from '../models/playerModel.js';
+import CalcPointsDiff from '../utils/calcPointsDiff.js';
 
 const router = express.Router();
 
+// here when the game is being stored, it has already been sorted by score and direction
 router.post('/', async (request, response) => {
     try {
         const { scores } = request.body;
@@ -24,11 +26,15 @@ router.post('/', async (request, response) => {
             }
             return b.score - a.score; // Descending order for score
         });
-        console.log("Sorted scores:", scores);
+        // console.log("Sorted scores:", scores);
 
         // The winner is the first entry in the sorted array
         const winnerId = scores[0]._id;
-        console.log("Winner ID:", winnerId);
+
+        for (let i = 0; i < 4; i++) {
+            scores[i].rankOfAGame = i + 1;
+            scores[i].pointsDiff = CalcPointsDiff(i + 1, scores[i].score);
+        }
 
         const newGame = new Game({
             scores,
@@ -105,12 +111,13 @@ router.delete('/:id', async (request, response) => {
     const { id } = request.params;
 
     try {
-        const game = await Game.findOneAndDelete({ id });
+        const game = await Game.findById(id);
 
         if (!game) {
-            return response.status(404).send({ message: 'Game not found' });
+            return response.status(404).send({ message: "Game not found" });
         }
 
+        await Game.findByIdAndDelete(id);
         response.status(200).send({ message: 'Game deleted successfully', gameNo: id });
     } catch (error) {
         console.error(error);

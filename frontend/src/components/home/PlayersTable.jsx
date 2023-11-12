@@ -49,7 +49,7 @@ const PlayersTable = ({ players }) => {
               <StyledTableCell>Ranking</StyledTableCell>
               <StyledTableCell align="right">Name</StyledTableCell>
               <StyledTableCell align="right">Played</StyledTableCell>
-              <StyledTableCell align="right">Score</StyledTableCell>
+              <StyledTableCell align="right">Points</StyledTableCell>
               <StyledTableCell align="right">Operations</StyledTableCell>
             </StyledTableRow>
           </TableHead>

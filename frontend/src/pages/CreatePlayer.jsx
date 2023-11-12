@@ -58,7 +58,7 @@ const CreatePlayer = () => {
               value={name}
               // set event.target.value to name
               onChange={(e) => setName(e.target.value)}
-              className="border-2 border-gray-500 px-4 py-2 w-full"
+              className="border-2 px-4 py-2 w-full"
             />
           </div>
           <div className="my-4">
@@ -69,7 +69,7 @@ const CreatePlayer = () => {
               value={gamesPlayed}
               // set event.target.value to name
               onChange={(e) => setGamesPlayed(e.target.value)}
-              className="border-2 border-gray-500 px-4 py-2 w-full"
+              className="border-2 px-4 py-2 w-full"
             />
           </div>
           <div className="my-4">
@@ -80,7 +80,7 @@ const CreatePlayer = () => {
               value={totalScore}
               // set event.target.value to name
               onChange={(e) => setTotalScore(e.target.value)}
-              className="border-2 border-gray-500 px-4 py-2 w-full"
+              className="border-2 px-4 py-2 w-full"
             />
           </div>
           <div className="my-4 self-end">

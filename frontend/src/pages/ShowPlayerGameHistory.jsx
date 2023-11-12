@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import { createTheme, ThemeProvider } from "@mui/material";
+import FetchPlayerDetails from "../components/functions/FetchPlayerDetails";
+import MapDirection from "../components/functions/MapDirection";
 
 const ShowPlayerGameHistory = () => {
   // useState({}) initialize the state to an empty object
@@ -15,32 +17,6 @@ const ShowPlayerGameHistory = () => {
   const { name } = useParams();
   const [playerIdNameMap, setPlayerIdNameMap] = useState({});
 
-  const fetchPlayerDetails = async (playerId) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:5555/players/${playerId}`
-      );
-      return response.data; // this will be the player details
-    } catch (error) {
-      console.error("Error fetching player details:", error);
-      return null;
-    }
-  };
-
-  const mapDirection = (direction) => {
-    if (direction === 0) {
-      return "东";
-    }
-    if (direction === 1) {
-      return "南";
-    }
-    if (direction === 2) {
-      return "西";
-    }
-    if (direction === 3) {
-      return "北";
-    }
-  }
 
   // useEffect is a hook that lets you perform side effects in function components
   // here we use it to fetch data from the server
@@ -65,9 +41,9 @@ const ShowPlayerGameHistory = () => {
         // console.log("Player IDs:", playerIds);
         // Fetch details for each player
         const playerDetailsPromises =
-          Array.from(playerIds).map(fetchPlayerDetails);
+          Array.from(playerIds).map(FetchPlayerDetails);
         // console.log("Player Details Promises:", playerDetailsPromises);
-        
+
         const playerDetails = await Promise.all(playerDetailsPromises);
         // console.log("Player Details:", playerDetails);
 
@@ -101,59 +77,61 @@ const ShowPlayerGameHistory = () => {
     <ThemeProvider theme={theme}>
       <div className="p-4 font-sans-serif Nunito Sans">
         <BackButton />
-        <h1 className="text-3xl my-4 flex justify-center items-center">
+        <h1 className="text-3xl my-4 flex items-center">
           {player.name}'s Info
         </h1>
         {loading ? (
           <CircularProgress />
         ) : (
-          <div className="flex justify-center items-center flex-col border-2  rounded-xl p-4">
-            <div className="my-4">
+          <div className="flex  flex-col border-2  rounded-xl p-4">
+            <div className="my-2">
               <span className="text-xl mr-4 text-gray-500">Name</span>
               <span>{player.name}</span>
             </div>
-            <div className="my-4">
+            <div className="my-2">
               <span className="text-xl mr-4 text-gray-500">Games Played</span>
               <span>{player.gamesPlayed}</span>
             </div>
-            <div className="my-4">
-              <span className="text-xl mr-4 text-gray-500">Score</span>
+            <div className="my-2">
+              <span className="text-xl mr-4 text-gray-500">Points</span>
               <span>{player.totalScore}</span>
             </div>
-            <div className="my-4">
+            <div className="my-2">
               <span className="text-xl mr-4 text-gray-500">Average Rank</span>
               <span>{player.avgRank}</span>
             </div>
-            <div className="my-4">
+            <div className="my-2">
               <span className="text-xl mr-4 text-gray-500">Create Time</span>
               <span>{new Date(player.createdAt).toString()}</span>
             </div>
-            <div className="my-4">
+            <div className="my-2">
               <span className="text-xl mr-4 text-gray-500">
                 Last Update Time
               </span>
               <span>{new Date(player.updatedAt).toString()}</span>
             </div>
 
-            <div className="my-4">
+            <div className="my-2 flex">
               <span className="text-xl mr-4 text-gray-500">Games Played</span>
               {/* if there is a game */}
-              {PlayerGamesHistory.length > 0 ? (
-                PlayerGamesHistory.map((game, gameIndex) => (
-                  <div key={gameIndex}>
-                    {/* ... game details ... */}
-                    {game.scores.map((score, scoreIndex) => (
-                      <div key={scoreIndex} className='p-4'>
-                        <p>Player Name: {playerIdNameMap[score.playerId]}</p>
-                        <p>Score: {score.score}</p>
-                        <p>Direction: {mapDirection(score.direction)}</p>
-                      </div>
-                    ))}
-                  </div>
-                ))
-              ) : (
-                <p>No games history available.</p>
-              )}
+              <div className='flex-row'>
+                {PlayerGamesHistory.length > 0 ? (
+                  PlayerGamesHistory.map((game, gameIndex) => (
+                    <div key={gameIndex}>
+                      {/* ... game details ... */}
+                      {game.scores.map((score, scoreIndex) => (
+                        <div key={scoreIndex} className="p-1">
+                          <span>Player Name: {playerIdNameMap[score.playerId]}; </span>
+                          <span>Points: {score.score}; </span>
+                          <span>Direction: {MapDirection(score.direction)}; </span>
+                        </div>
+                      ))}
+                    </div>
+                  ))
+                ) : (
+                  <p>No games history available.</p>
+                )}
+              </div>
             </div>
           </div>
         )}
