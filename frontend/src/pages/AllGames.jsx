@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Game } from "../../../backend/models/gameModel";
 import axios from "axios";
-import BackButton from "../components/BackButton";
-import CircularProgress from "@mui/material/CircularProgress";
 import GameCard from "../components/GameCard";
 import BackAppBar from "../components/BackAppBar";
-import { set } from "mongoose";
-import FetchPlayerDetails from "../components/functions/FetchPlayerDetails";
-import MapDirection from "../components/functions/MapDirection";
-import { DateTime } from "luxon";
 
 const AllGames = () => {
   const [allGames, setAllGames] = useState([]);

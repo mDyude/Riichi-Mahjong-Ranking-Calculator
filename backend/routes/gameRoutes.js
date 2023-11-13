@@ -1,6 +1,5 @@
 import express from 'express';
 import { Game } from '../models/gameModel.js';
-import { Player } from '../models/playerModel.js';
 import CalcPointsDiff from '../utils/calcPointsDiff.js';
 
 const router = express.Router();

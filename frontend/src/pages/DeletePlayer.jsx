@@ -4,7 +4,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
-import { createTheme, ThemeProvider } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const DeletePlayer = () => {
