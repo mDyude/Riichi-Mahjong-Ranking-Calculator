@@ -71,7 +71,7 @@ const ShowPlayerGameHistory = () => {
               </div>
               <div className="my-2">
                 <span className="text-xl mr-4 text-gray-500">Points</span>
-                <span>{player.totalScore}</span>
+                <span>{Math.round(player.totalScore * 10) / 10}</span>
               </div>
               <div className="my-2">
                 <span className="text-xl mr-4 text-gray-500">Average Rank</span>
