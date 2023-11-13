@@ -7,6 +7,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { createTheme, Menu, ThemeProvider } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
+import BackAppBar from "../components/BackAppBar";
 
 const fetchData = async () => {
   try {
@@ -75,7 +76,7 @@ const CreateGame = () => {
           console.log(err.response.headers);
 
           // Display an alert with a specific error message
-          alert(`Error: ${err.response.data.message}`);
+          alert(`Error: Check if there are any duplicate players, or if any player has an incorrect score.`);
           location.reload();
 
           console.log(err);
@@ -86,10 +87,7 @@ const CreateGame = () => {
   return (
     <ThemeProvider theme={theme}>
       <div className="p-4">
-        <BackButton />
-        <h1 className="font-sans-serif Nunito Sans my-4 flex justify-center items-center">
-          Create Game
-        </h1>
+      <BackAppBar title="Create Game" />
         {loading ? <CircularProgress /> : ""}
         <div className="flex flex-col border-2 rounded-xl max-w-xl p-4 mx-auto">
           <div className="my-4">

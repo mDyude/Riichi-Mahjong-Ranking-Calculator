@@ -8,7 +8,7 @@ import DeletePlayer from './pages/DeletePlayer'
 import EditGame from './pages/EditGame'
 import EditPlayer from './pages/EditPlayer'
 import ShowPlayerGameHistory from './pages/ShowPlayerGameHistory'
-// import AllGames from './pages/AllGames'
+import AllGames from './pages/AllGames'
 
 const App = () => {
   return (
@@ -18,7 +18,7 @@ const App = () => {
       <Route path="/players/delete/:id" element={<DeletePlayer />} />
       <Route path="/players/edit/:id" element={<EditPlayer />} />
       <Route path="/players/:name" element={<ShowPlayerGameHistory />} />
-      {/* <Route path="/games/all" element={<AllGames />} /> */}
+      <Route path="/games/all" element={<AllGames />} />
       <Route path="/games/create" element={<CreateGame />} />
       <Route path="/games/delete/:id" element={<DeleteGame />} />
       <Route path="/games/edit/:id" element={<EditGame />} />

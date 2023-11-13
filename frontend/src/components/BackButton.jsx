@@ -8,7 +8,7 @@ const BackButton = ({destination = "/"}) => {
   return (
     <IconButton>
         <Link to={destination}>
-            <ArrowBack />
+            <ArrowBack color='action'/>
         </Link>
     </IconButton>
   )

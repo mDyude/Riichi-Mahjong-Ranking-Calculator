@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 import { Link } from "react-router-dom";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdOutlineAddBox, MdOutlineDelete } from "react-icons/md";
 import Button from "@mui/material/Button";
-import { Add, PersonAdd, Delete, Book } from "@mui/icons-material";
+import {
+  Add,
+  PersonAdd,
+  Delete,
+  CollectionsBookmark,
+} from "@mui/icons-material";
 import PlayersTable from "../components/home/PlayersTable";
 import PlayerCard from "../components/home/PlayerCard";
 import FloatingButton from "../components/FloatingButton";
@@ -39,14 +44,15 @@ const Home = () => {
     <div className="p-4 font-nunito-sans">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl my-8">680 & 499 雀庄排名</h1>
+        <Link to="/games/all">
+          <Button variant="contained" startIcon={<CollectionsBookmark />}>
+            History Games
+          </Button>
+        </Link>
       </div>
-      {loading ? (
-        <CircularProgress />
-      ) : (
-        <PlayersTable players={players} />
-      )}
+      {loading ? <CircularProgress /> : <PlayersTable players={players} />}
       <div>
-      <FloatingButton style={{ position: 'fixed', bottom: 50, right: 30 }}/>
+        <FloatingButton style={{ position: "fixed", bottom: 50, right: 30 }} />
       </div>
     </div>
   );

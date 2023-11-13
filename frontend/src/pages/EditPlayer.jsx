@@ -5,9 +5,11 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { set } from "mongoose";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import BackAppBar from "../components/BackAppBar";
 import { createTheme, ThemeProvider } from "@mui/material";
 import Backdrop from '@mui/material/Backdrop';
+import Button from '@mui/material/Button';
+
 
 const EditPlayer = () => {
   const [name, setName] = useState("");
@@ -62,7 +64,7 @@ const EditPlayer = () => {
   return (
     <ThemeProvider theme={theme}>
       <div className="p-4">
-        <BackButton />
+      <BackAppBar title="Edit Player" />
         <h1 className="font-sans-serif Nunito Sans my-4 flex justify-center items-center">
           Edit Player {name}
         </h1>

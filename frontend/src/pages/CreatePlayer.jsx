@@ -7,6 +7,7 @@ import Container from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material";
+import BackAppBar from "../components/BackAppBar";
 
 const CreatePlayer = () => {
   const [name, setName] = useState("");
@@ -45,10 +46,7 @@ const CreatePlayer = () => {
   return (
     <ThemeProvider theme={theme}>
       <div className="p-4">
-        <BackButton />
-        <h1 className="font-sans-serif Nunito Sans my-4 flex justify-center items-center">
-          Create Player
-        </h1>
+      <BackAppBar title="Create Player" />
         {loading ? <CircularProgress /> : ""}
         <div className="flex flex-col border-2 rounded-xl max-w-xl p-4 mx-auto">
           <div className="my-4">
