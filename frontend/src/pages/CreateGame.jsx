@@ -76,7 +76,7 @@ const CreateGame = () => {
 
           // Display an alert with a specific error message
           alert(`Error: Check if there are any duplicate players, or if any player has an incorrect score.`);
-          location.reload();
+          window.location.replace("/");
 
           console.log(err);
         }

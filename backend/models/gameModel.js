@@ -77,11 +77,13 @@ gameSchema.post('save', async function (next) {
     // update player pointsDiff and totalScore
     const promises = this.scores.map(async (score) => {
         const player = await Player.findById(score.playerId);
+        player.rankSum += score.rankOfAGame;
         player.totalScore += score.pointsDiff;
         player.sumGameScore += score.score;
         player.gamesPlayed += 1;
-        player.avgRank = (player.sumGameScore + score.score) / (player.gamesPlayed + 1);
-        player.avgScore = (player.totalScore + score.pointsDiff) / (player.gamesPlayed + 1);
+        player.avgRank = (player.rankSum + score.rankOfAGame) / (player.gamesPlayed + 1);
+        player.avgPts = (player.totalScore + score.pointsDiff) / (player.gamesPlayed + 1);
+        player.avgScore = (player.sumGameScore + score.score) / (player.gamesPlayed + 1);
         await player.save();
     });
         await Promise.all(promises);
@@ -91,11 +93,13 @@ gameSchema.post('deleteOne', async function (next) {
     // update player pointsDiff and totalScore
     const promises = this.scores.map(async (score) => {
         const player = await Player.findById(score.playerId);
+        player.rankSum -= score.rankOfAGame;
         player.totalScore -= score.pointsDiff;
         player.sumGameScore -= score.score;
         player.gamesPlayed -= 1;
-        player.avgRank = (player.sumGameScore - score.score) / (player.gamesPlayed - 1);
-        player.avgScore = (player.totalScore - score.pointsDiff) / (player.gamesPlayed - 1);
+        player.avgRank = (player.rankSum - score.rankOfAGame) / (player.gamesPlayed - 1);
+        player.avgPts = (player.totalScore - score.pointsDiff) / (player.gamesPlayed - 1);
+        player.avgScore = (player.sumGameScore - score.score) / (player.gamesPlayed - 1);
         await player.save();
     });
     await Promise.all(promises);

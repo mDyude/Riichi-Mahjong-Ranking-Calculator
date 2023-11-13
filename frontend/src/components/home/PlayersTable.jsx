@@ -45,10 +45,11 @@ const PlayersTable = ({ players }) => {
         <Table sx={{ minWidth: 470 }} aria-label="simple table">
           <TableHead>
             <StyledTableRow>
-              <StyledTableCell>Ranking</StyledTableCell>
-              <StyledTableCell align="right">Name</StyledTableCell>
+            <StyledTableCell>Ranking</StyledTableCell>
+              <StyledTableCell align="left">Name</StyledTableCell>
               <StyledTableCell align="right">Played</StyledTableCell>
-              <StyledTableCell align="right">Points</StyledTableCell>
+              <StyledTableCell align="right">Avg Score</StyledTableCell>
+              <StyledTableCell align="right">Total Pts</StyledTableCell>
               <StyledTableCell align="right">Operations</StyledTableCell>
             </StyledTableRow>
           </TableHead>
@@ -70,6 +71,7 @@ const PlayersTable = ({ players }) => {
                   </Link>
                 </StyledTableCell>
                 <StyledTableCell align="right">{player.gamesPlayed}</StyledTableCell>
+                <StyledTableCell align="right">{Math.round(player.avgScore)}</StyledTableCell>
                 <StyledTableCell align="right">{Math.round(player.totalScore * 10) / 10}</StyledTableCell>
                 <StyledTableCell align="right">
                   <Link to={`/players/edit/${player._id}`}>

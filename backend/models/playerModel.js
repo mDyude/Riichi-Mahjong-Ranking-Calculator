@@ -20,7 +20,7 @@ const playerSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
-        rank: {
+        rankSum: {
             type: Number,
             default: 0,
         },
@@ -29,6 +29,10 @@ const playerSchema = new mongoose.Schema(
             default: 0,
         },
         avgScore: {
+            type: Number,
+            default: 0,
+        },
+        avgPts: {
             type: Number,
             default: 0,
         },
