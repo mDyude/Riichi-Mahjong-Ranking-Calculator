@@ -71,7 +71,7 @@ const PlayersTable = ({ players }) => {
                   </Link>
                 </StyledTableCell>
                 <StyledTableCell align="right">{player.gamesPlayed}</StyledTableCell>
-                <StyledTableCell align="right">{player.totalScore}</StyledTableCell>
+                <StyledTableCell align="right">{Math.round(player.totalScore * 10) / 10}</StyledTableCell>
                 <StyledTableCell align="right">
                   <Link to={`/players/edit/${player._id}`}>
                     <IconButton aria-label="edit">

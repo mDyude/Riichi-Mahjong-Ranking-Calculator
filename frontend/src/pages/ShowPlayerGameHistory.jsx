@@ -93,8 +93,8 @@ const ShowPlayerGameHistory = () => {
                 {/* if there is a game */}
                 <div className="flex-row">
                   {PlayerGamesHistory.length > 0 ? (
-                    PlayerGamesHistory.map((game, gameIndex) => (
-                      <div key={gameIndex}>
+                    PlayerGamesHistory.slice(0).reverse().map((game, gameIndex) => (
+                      <div key={gameIndex} className='py-2'>
                         <GameCard game={game} />
                       </div>
                     ))

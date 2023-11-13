@@ -10,10 +10,12 @@ const playerSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
+        // the "scores" in total
         totalScore: {
             type: Number,
             default: 0,
         },
+        // the "pointsDiff" in total
         sumGameScore: {
             type: Number,
             default: 0,
@@ -23,6 +25,10 @@ const playerSchema = new mongoose.Schema(
             default: 0,
         },
         avgRank:{
+            type: Number,
+            default: 0,
+        },
+        avgScore: {
             type: Number,
             default: 0,
         },

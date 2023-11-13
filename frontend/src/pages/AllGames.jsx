@@ -36,12 +36,12 @@ const AllGames = () => {
   }, [allGames]); // This effect runs whenever allGames changes
 
   return (
-    <div>
+    <div className='px-4'>
       <BackAppBar title="All Games" />
-      <div className='	font-sans-serif Nunito Sans p-4'>
-        {allGames.map((game) => {
+      <div className='font-sans-serif Nunito Sans py-2'>
+        {allGames.slice(0).reverse().map((game) => {
           return (
-          <div key={game.id}>
+          <div className='py-2' key={game.id}>
             <GameCard game={game} />
           </div>)
         })}

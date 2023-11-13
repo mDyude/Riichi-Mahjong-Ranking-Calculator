@@ -72,4 +72,33 @@ gameSchema.pre('save', async function (next) {
 
 });
 
+// post hook to update player pointsDiff and totalScore
+gameSchema.post('save', async function (next) {
+    // update player pointsDiff and totalScore
+    const promises = this.scores.map(async (score) => {
+        const player = await Player.findById(score.playerId);
+        player.totalScore += score.pointsDiff;
+        player.sumGameScore += score.score;
+        player.gamesPlayed += 1;
+        player.avgRank = (player.sumGameScore + score.score) / (player.gamesPlayed + 1);
+        player.avgScore = (player.totalScore + score.pointsDiff) / (player.gamesPlayed + 1);
+        await player.save();
+    });
+        await Promise.all(promises);
+});
+
+gameSchema.post('deleteOne', async function (next) {
+    // update player pointsDiff and totalScore
+    const promises = this.scores.map(async (score) => {
+        const player = await Player.findById(score.playerId);
+        player.totalScore -= score.pointsDiff;
+        player.sumGameScore -= score.score;
+        player.gamesPlayed -= 1;
+        player.avgRank = (player.sumGameScore - score.score) / (player.gamesPlayed - 1);
+        player.avgScore = (player.totalScore - score.pointsDiff) / (player.gamesPlayed - 1);
+        await player.save();
+    });
+    await Promise.all(promises);
+});
+
 export const Game = mongoose.model('game', gameSchema);

@@ -92,7 +92,7 @@ const EditPlayer = () => {
           </div>
           <div className="my-4">
             <TextField
-              label="Scores"
+              label="Points"
               type="number"
               value={totalScore}
               // set event.target.value to name

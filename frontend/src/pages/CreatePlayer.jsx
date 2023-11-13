@@ -72,7 +72,7 @@ const CreatePlayer = () => {
           </div>
           <div className="my-4">
             <TextField
-              label="Scores"
+              label="Points"
               variant="outlined"
               type="number"
               value={totalScore}
