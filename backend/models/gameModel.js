@@ -51,7 +51,7 @@ gameSchema.pre('save', async function (next) {
         const err = new Error('Duplicate players detected. Each player must be unique.');
         next(err);
     }
-    
+
     // check if the total score is 100000
     // reduce mathod to sum up all the scores
     // 0 is the initial value for the accumulator acc
@@ -86,23 +86,58 @@ gameSchema.post('save', async function (next) {
         player.avgScore = (player.sumGameScore + score.score) / (player.gamesPlayed + 1);
         await player.save();
     });
-        await Promise.all(promises);
-});
-
-gameSchema.post('deleteOne', async function (next) {
-    // update player pointsDiff and totalScore
-    const promises = this.scores.map(async (score) => {
-        const player = await Player.findById(score.playerId);
-        player.rankSum -= score.rankOfAGame;
-        player.totalScore -= score.pointsDiff;
-        player.sumGameScore -= score.score;
-        player.gamesPlayed -= 1;
-        player.avgRank = (player.rankSum - score.rankOfAGame) / (player.gamesPlayed - 1);
-        player.avgPts = (player.totalScore - score.pointsDiff) / (player.gamesPlayed - 1);
-        player.avgScore = (player.sumGameScore - score.score) / (player.gamesPlayed - 1);
-        await player.save();
-    });
     await Promise.all(promises);
 });
+
+gameSchema.pre('findOneAndDelete', async function (next) {
+    const docToDelete = await this.model.findOne(this.getFilter());
+    
+    if (docToDelete && docToDelete.scores) {
+        const updatePromises = docToDelete.scores.map(async (score) => {
+            const player = await Player.findById(score.playerId);
+            if (player) {
+                player.rankSum -= score.rankOfAGame;
+                player.totalScore -= score.pointsDiff;
+                player.sumGameScore -= score.score;
+                player.gamesPlayed = Math.max(player.gamesPlayed - 1, 0);
+
+                // Ensure gamesPlayed is not zero to avoid division by zero
+                if (player.gamesPlayed > 0) {
+                    player.avgRank = player.rankSum / player.gamesPlayed;
+                    player.avgPts = player.totalScore / player.gamesPlayed;
+                    player.avgScore = player.sumGameScore / player.gamesPlayed;
+                } else {
+                    player.avgRank = 0;
+                    player.avgPts = 0;
+                    player.avgScore = 0;
+                }
+
+                await player.save();
+            }
+        });
+        await Promise.all(updatePromises);
+    }
+
+    next();
+});
+
+// gameSchema.pre('findOneAndDelete', async function (next) {
+//     const docToDelete = await this.model.findOne(this.getFilter());
+//     // update player pointsDiff and totalScore
+//     if (docToDelete && docToDelete.scores) {
+//         const updatePromises = docToDelete.scores.map(async (score) => {
+//             const player = await Player.findById(score.playerId);
+//             player.rankSum -= score.rankOfAGame;
+//             player.totalScore -= score.pointsDiff;
+//             player.sumGameScore -= score.score;
+//             player.gamesPlayed -= 1;
+//             player.avgRank = (player.rankSum - score.rankOfAGame) / (player.gamesPlayed - 1);
+//             player.avgPts = (player.totalScore - score.pointsDiff) / (player.gamesPlayed - 1);
+//             player.avgScore = (player.sumGameScore - score.score) / (player.gamesPlayed - 1);
+//             await player.save();
+//         });
+//         await Promise.all(updatePromises);
+//     }
+// });
 
 export const Game = mongoose.model('game', gameSchema);
