@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import CircularProgress from "@mui/material/CircularProgress";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import {
@@ -47,7 +46,7 @@ const Home = () => {
           </Button>
         </Link>
       </div>
-      {loading ? <CircularProgress /> : <PlayersTable players={players} />}
+      <PlayersTable players={players} />
       <div>
         <FloatingButton style={{ position: "fixed", bottom: 50, right: 30 }} />
       </div>
